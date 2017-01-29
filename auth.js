@@ -59,6 +59,11 @@ deferred.promise.then(
                 'bearer': token.access_token
             }
 		}, function(err, res) {
-	  	    console.log(res.body);
+	  	    resolve(res.body)
 		})
-	});
+	})
+	.then(
+		function(body) {
+			console.log(body);
+		}
+	);
