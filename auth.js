@@ -28,19 +28,20 @@ request({
 });
 );
 */
-
-q(function(resolve,reject) {
-	request( {
+var deferred = q.defer();
+var token = '';
+request(
+	{
 		url: 'https://accounts.spotify.com/api/token',
-	  	method: 'POST',
-  		auth: {
-    		user: 'cc786c33043441a0b4dbce837c33ef98',
-    		pass: 'f41fd8b65e174a96b3b4fb89978f120a'
-  		},
-  		form: {
-    	'grant_type': 'client_credentials'
-  		}
-	} , function(err, data) {
+	  method: 'POST',
+  	auth: {
+  		user: 'cc786c33043441a0b4dbce837c33ef98',
+  		pass: 'f41fd8b65e174a96b3b4fb89978f120a'
+  	},
+		form: {
+  	'grant_type': 'client_credentials'
+  	}
+	} , function(err, res) {
   		if (err) {
 				deferred.reject();
 			}
