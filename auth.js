@@ -46,18 +46,19 @@ request(
 				deferred.reject();
 			}
 			token = JSON.parse(res.body);
+            console.log(token);
 			deferred.resolve();
 	});
 
-deferred.then(
-	function(json) {
+deferred.promise.then(
+	function() {
+        console.log("Resolved!");
 		request({
-	  	url: 'https://api.spotify.com/v1/users/122958530/playlists/7xfNecdGJwt6oS6STe8T31/tracks',
-	  	auth: {
-	   		'bearer': json.access_token
-	  	}
-		},
-		function(err, res) {
-	  	console.log(res.body);
+            url: 'https://api.spotify.com/v1/users/122958530/playlists/7xfNecdGJwt6oS6STe8T31/tracks',
+            auth: {
+                'bearer': token.access_token
+            }
+		}, function(err, res) {
+	  	    console.log(res.body);
 		})
 	});
