@@ -30,7 +30,7 @@ request({
 */
 
 q(function(resolve,reject) {
-	request( { 
+	request( {
 		url: 'https://accounts.spotify.com/api/token',
 	  	method: 'POST',
   		auth: {
@@ -39,20 +39,25 @@ q(function(resolve,reject) {
   		},
   		form: {
     	'grant_type': 'client_credentials'
-  		}	
+  		}
 	} , function(err, data) {
   		if (err) {
-			reject();
-		}
-		var json = JSON.parse(res.body);
-		resolve(json);
-	})
-}).then(function(json) {
-	request({
-  		url: 'https://api.spotify.com/v1/users/122958530/playlists/7xfNecdGJwt6oS6STe8T31/tracks',
-  		auth: {
-   			'bearer': json.access_token
-  		}
-}, function(err, res) {
-  	console.log(res.body);
-})}, function() {});
+				deferred.reject();
+			}
+			token = JSON.parse(res.body);
+            console.log(token);
+			deferred.resolve();
+	});
+
+deferred.promise.then(
+	function() {
+        console.log("Resolved!");
+		request({
+            url: 'https://api.spotify.com/v1/users/122958530/playlists/7xfNecdGJwt6oS6STe8T31/tracks',
+            auth: {
+                'bearer': token.access_token
+            }
+		}, function(err, res) {
+	  	    console.log(res.body);
+		})
+	});
